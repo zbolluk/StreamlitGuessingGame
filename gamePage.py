@@ -1,11 +1,11 @@
 import streamlit as st
 import random
-from openai import OpenAI
+import openai
 
 
-openai_api_key = st.secrets["api_key"]
-
-client = OpenAI(openai_api_key)
+client = openai.OpenAI(
+    api_key=st.secrets["api_key"], 
+)
 
 model = "gpt-4o-mini"
 
@@ -20,7 +20,7 @@ def Game_page():
     if "history" not in st.session_state:
         st.session_state.history = []
     if "chat_history" not in st.session_state:
-        st.session_state.chat_history = [{"role": "system", "content": "You are a helpful assistant for a number guessing game."}]
+        st.session_state.chat_history = []
     if "games_played" not in st.session_state:
         st.session_state.games_played = 0
     if "guesses_per_game" not in st.session_state:
@@ -74,11 +74,15 @@ def Game_page():
             st.session_state.history.append(Guess)
             # Chatbot 
             try:
-                chat_completion = client.chat_completions.create(
+                messages = [
+                    {"role": "system", "content": "You are a helpful assistant for a number guessing game."}
+                     ]
+                messages.extend(st.session_state.chat_history)
+                chat_completion = client.chat.completions.create(
                     model = model,
-                    messages = st.session_state.chat_history
+                    messages = messages
                 )
-                bot_response = chat_completion.choices[0].message["content"]
+                bot_response = chat_completion.choices[0].message.content
                 st.session_state.chat_history.append({"role": "assistant", "content": bot_response})
             except Exception as e:
                 st.session_state.chat_history.append(
