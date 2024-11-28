@@ -79,6 +79,7 @@ def Game_page():
                     messages = messages
                 )
                 bot_response = chat_completion.choices[0].message.content
+                print(bot_response)
                 st.session_state.chat_history.append({"role": "assistant", "content": bot_response})
             except Exception as e:
                 st.session_state.chat_history.append(
