@@ -3,9 +3,9 @@ import random
 from openai import OpenAI
 
 
-openai_api_key = st.secrets["openai"]["api_key"]
+openai_api_key = st.secrets["api_key"]
 
-client = OpenAI(api_key=openai_api_key)
+client = OpenAI(openai_api_key)
 
 model = "gpt-4o-mini"
 
