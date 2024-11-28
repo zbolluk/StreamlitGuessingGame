@@ -4,7 +4,9 @@ import openai
 from openai import OpenAI
 
 
-client = openai.Client(api_key=st.secrets["api_key"])
+api_key = st.secrets["api_key"]
+
+client = OpenAI(api_key=api_key)
 
 model = "gpt-4o-mini"
 
