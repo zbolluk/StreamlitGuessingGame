@@ -1,10 +1,15 @@
 import streamlit as st
 import random
 from openai import OpenAI
-import os
 
-client = OpenAI(api_key="sk-svcacct-sasYDh93HtW8T-ZtXNCUElcOwmpB__D0ql2JJXLPl3kTrwrVeY2W_hTXl1AhYMsT3BlbkFJLcW4LbU2SOAgDFeOFXJyCA-l_xvOKYqPDTy1YJ2lGsEqPHLIXGwctBw7FOuGVAA")
+
+with open('api_key.txt', 'r') as file:
+    openai_api_key = file.read().strip()
+
+client = OpenAI(api_key= openai_api_key)
+
 model = "gpt-4o-mini"
+
 
 
 def Game_page():
