@@ -26,12 +26,12 @@ def Stats_page():
     # Bar Chart for Number of Guesses Per Game
     if st.session_state.guesses_per_game:
         st.write("Number of Guesses Per Game:")
-        # Create a DataFrame for visualization
+        # Create a DataFrame
         df = pd.DataFrame({
             "Game Number": range(1, len(st.session_state.guesses_per_game) + 1),
             "Number of Guesses": st.session_state.guesses_per_game
         })
-        # Plotting the bar chart
+        # Plotting the chart
         st.bar_chart(df.set_index("Game Number"))
     else:
         st.write("Play some games to see your statistics!")

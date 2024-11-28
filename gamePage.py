@@ -1,18 +1,16 @@
 import streamlit as st
 import random
-import openai
+from openai import OpenAI
 
 
-client = openai.OpenAI(
+client = OpenAI(
     api_key=st.secrets["api_key"], 
 )
 
 model = "gpt-4o-mini"
 
-
-
 def Game_page():
-    # Initialize session state variables
+    # Session state variables
     if "Goal" not in st.session_state:
         st.session_state.Goal = random.randint(1, 100)
     if "Guess_count" not in st.session_state:
@@ -26,17 +24,15 @@ def Game_page():
     if "guesses_per_game" not in st.session_state:
         st.session_state.guesses_per_game = []
 
-    # Chat message container
+    # Instructions
     st.title("Number Guessing Game")
     st.write("In this game, you guess a number between 0-100.")
     st.write("Then, you will see a feedback for your guess. Revise your guess based on the feedback.")
     st.write("Your goal is finding the target number. Good luck!")
 
-    # Display previous chat messages
     for chat in st.session_state.chat_history:
         st.chat_message(chat["role"]).write(chat["content"])
 
-    # Input section for the chat interface
     with st.chat_message("user"):
         Guess = st.text_input("Your guess:", label_visibility="collapsed")
 
@@ -105,6 +101,6 @@ def Game_page():
         st.session_state.chat_history = []
         st.rerun()
 
-    # Display guess history and total guesses (optional for user stats)
+    # Display guess history and total guesses
     st.write("Guess History:", st.session_state.history)
     st.write(f"Total Guesses: {st.session_state.Guess_count}")

@@ -9,10 +9,8 @@ pages = [
     st.Page(Stats_page, title = "Statistics")
     ]
 
-# Use Streamlit navigation
 pg = st.navigation(pages)
 
-# Run the selected page
 pg.run()
 
 
