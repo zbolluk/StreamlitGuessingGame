@@ -1,11 +1,10 @@
 import streamlit as st
 import random
+import openai
 from openai import OpenAI
 
 
-client = OpenAI(
-    api_key=st.secrets["api_key"], 
-)
+client = openai.Client(api_key=st.secrets["api_key"])
 
 model = "gpt-4o-mini"
 
