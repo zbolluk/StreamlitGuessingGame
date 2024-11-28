@@ -3,6 +3,10 @@ import random
 from openai import OpenAI
 import os
 
+client = OpenAI(api_key="sk-svcacct-sasYDh93HtW8T-ZtXNCUElcOwmpB__D0ql2JJXLPl3kTrwrVeY2W_hTXl1AhYMsT3BlbkFJLcW4LbU2SOAgDFeOFXJyCA-l_xvOKYqPDTy1YJ2lGsEqPHLIXGwctBw7FOuGVAA")
+model = "gpt-4o-mini"
+
+
 def Game_page():
     # Initialize session state variables
     if "Goal" not in st.session_state:
@@ -12,7 +16,7 @@ def Game_page():
     if "history" not in st.session_state:
         st.session_state.history = []
     if "chat_history" not in st.session_state:
-        st.session_state.chat_history = []
+        st.session_state.chat_history = [{"role": "system", "content": "You are a helpful assistant for a number guessing game."}]
     if "games_played" not in st.session_state:
         st.session_state.games_played = 0
     if "guesses_per_game" not in st.session_state:
@@ -64,6 +68,18 @@ def Game_page():
             # Update guess count and history
             st.session_state.Guess_count += 1
             st.session_state.history.append(Guess)
+            # Chatbot 
+            try:
+                chat_completion = client.chat_completions.create(
+                    model = model,
+                    messages = st.session_state.chat_history
+                )
+                bot_response = chat_completion.choices[0].message["content"]
+                st.session_state.chat_history.append({"role": "assistant", "content": bot_response})
+            except Exception as e:
+                st.session_state.chat_history.append(
+                    {"role": "assistant", "content": f"Error with OpenAI API: {str(e)}"}
+                )
 
         except ValueError:
             # Handle invalid input
