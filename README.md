@@ -16,6 +16,7 @@ streamlit run app.py
 ## 🕹️ How to Play
 
 Enter your guess, and the app will tell you if it’s too high, too low, or correct — keep guessing until you win! 🎉
+You can also see your game statistics, and observe how you perform.
 
 🌐 Live Demo
 
